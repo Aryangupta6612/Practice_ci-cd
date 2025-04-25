@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    image: wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: ""
+      WORDPRESS_DB_NAME: wordpress
+  db:
+    image: mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+        - db_data:/var/lib/mysql
+
+volumes:
+  wordpress_data:
+  db_data:  
