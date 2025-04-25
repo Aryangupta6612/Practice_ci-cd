@@ -1,7 +1,12 @@
 pipeline {
     agent any
-
+    
     stages {
+        stage('Hello') {
+            steps {      
+                echo "Hello, World!"
+            }
+        }
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Aryangupta6612/Practice_ci-cd.git', branch: 'master'
