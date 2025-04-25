@@ -2,7 +2,7 @@ pipeline{
     stages{
         stage('checkout'){
             steps{
-                git url: 'https://github.com/Aryangupta6612/Practice_ci-cd.git', branch: 'main'
+                git url: 'https://github.com/Aryangupta6612/Practice_ci-cd.git', branch: 'master'
             }
         }
         stage('build and deploy'){
