@@ -1,31 +1,39 @@
-pipeline{
-    stages{
-        stage('checkout'){
-            steps{
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
                 git url: 'https://github.com/Aryangupta6612/Practice_ci-cd.git', branch: 'master'
             }
         }
-        stage('build and deploy'){
-            steps{
+
+        stage('Build and Deploy') {
+            steps {
                 sh '''
-                    echo "removing unnecessary files"
-                    
-                    docker-compose down||true
-                    docker-compose up -d --build
+                    echo "Removing unnecessary containers (if any)"
+                    docker compose down || true
+
+                    echo "Building and starting containers"
+                    docker compose up -d --build
                 '''
             }
         }
     }
-    post{
-        always{
-            sh 'docker compose prune -f||true'
-            sh 'docker image prune -f||true'
+
+    post {
+        always {
+            echo "Cleaning up unused resources"
+            sh 'docker compose down || true'
+            sh 'docker system prune -f || true'
         }
-        success{
-            echo "Build and deploy successful"
+
+        success {
+            echo "✅ Build and deploy successful"
         }
-        failure{
-            echo "Build and deploy failed"
+
+        failure {
+            echo "❌ Build and deploy failed"
         }
     }
 }
